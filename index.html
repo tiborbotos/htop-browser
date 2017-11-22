@@ -65,6 +65,8 @@ function load() {
 	});
 }
 
+const months = [31,28,31,30,31,30,31,31,30,31,30,31];
+
 function step(direction) {
 	previousDirection = direction;
 	currentIndex.s += direction;
@@ -91,6 +93,22 @@ function step(direction) {
 	} else if (currentIndex.h < 0) {
 		currentIndex.d -= 1;
 		currentIndex.h = 23;
+	}
+
+	if (currentIndex.d > months[currentIndex.mo - 1]) {
+		currentIndex.mo += 1;
+		currentIndex.d = 1;
+	} else if (currentIndex.d < 1) {
+		currentIndex.mo -= 1;
+		currentIndex.d = months[currentIndex.mo - 1];
+	}
+
+	if (currentIndex.mo > 12) {
+		currentIndex.y += 1;
+		currentIndex.mo = 1;
+	} else if (currentIndex.mo < 1) {
+		currentIndex.y -= 1;
+		currentIndex.mo = 12;
 	}
 
 	load();
